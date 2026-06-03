@@ -4,7 +4,7 @@ from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtGui import QPainter, QColor
 
 from core.system_monitor import get_stats
-
+from widgets.chat_window import ChatWindow
 
 class NikkiHUD(QWidget):
 
@@ -46,6 +46,7 @@ class NikkiHUD(QWidget):
         self.stats_timer.start(1000)
 
         self.update_stats()
+        self.chat_window = ChatWindow()
 
     def update_stats(self):
 
@@ -116,6 +117,14 @@ class NikkiHUD(QWidget):
 
         self.oldPos = event.globalPosition().toPoint()
 
+    def mouseDoubleClickEvent(self, event):
+
+        if self.chat_window.isVisible():
+            self.chat_window.hide()
+        else:
+            self.chat_window.show()
+            self.chat_window.raise_()
+            self.chat_window.activateWindow()
 
 app = QApplication(sys.argv)
 
